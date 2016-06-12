@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CoursesDataBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'CoursesDataBase.dbo.About' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="About">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Image" Type="nvarchar" MaxLength="100" />
+    <Property Name="Details" Type="nvarchar(max)" />
+    <Property Name="Title" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ActualRating">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CourseID" Type="int" Nullable="false" />
+    <Property Name="Rate" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Image" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Teacher" Type="nvarchar" MaxLength="100" />
+    <Property Name="Field" Type="int" />
+    <Property Name="CourseLevel" Type="int" />
+    <Property Name="HoursNumber" Type="int" />
+    <Property Name="Details" Type="nvarchar(max)" />
+    <Property Name="Image" Type="nvarchar" MaxLength="100" />
+    <Property Name="Rate" Type="int" />
+    <Property Name="Priority" Type="int" />
+  </EntityType>
+  <EntityType Name="CoursesPriority">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CourseID" Type="int" Nullable="false" />
+    <Property Name="Priority" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'CoursesDataBase.dbo.MainImages' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="MainImages">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="ImageUrl" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ImageUrl" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ImageThumbURL" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Rates">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="CourseID" Type="int" Nullable="false" />
+    <Property Name="UserRate" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="UserFriends">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FriendID" Type="int" Nullable="false" />
+    <Property Name="Priority" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Job" Type="nvarchar" MaxLength="100" />
+    <Property Name="FieldInterest" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="UsersExpert">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="CategoryID" Type="int" Nullable="false" />
+    <Property Name="Expert" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ActualRating_Courses">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+    <End Role="ActualRating" Type="Self.ActualRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ActualRating">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Courses_Categories">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+    <End Role="Courses" Type="Self.Courses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Courses">
+        <PropertyRef Name="Field" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CoursesPriority_Courses">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+    <End Role="CoursesPriority" Type="Self.CoursesPriority" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CoursesPriority">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rates_Courses">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+    <End Role="Rates" Type="Self.Rates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Rates">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rates_Rates">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Rates" Type="Self.Rates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Rates">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserFriends_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="UserFriends" Type="Self.UserFriends" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserFriends">
+        <PropertyRef Name="FriendID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersExpert_Categories">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+    <End Role="UsersExpert" Type="Self.UsersExpert" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UsersExpert">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersExpert_UsersExpert">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="UsersExpert" Type="Self.UsersExpert" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UsersExpert">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CoursesDataBaseModelStoreContainer">
+    <EntitySet Name="ActualRating" EntityType="Self.ActualRating" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CoursesPriority" EntityType="Self.CoursesPriority" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rates" EntityType="Self.Rates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserFriends" EntityType="Self.UserFriends" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsersExpert" EntityType="Self.UsersExpert" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="About" EntityType="Self.About" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [About].[ID] AS [ID], 
+    [About].[Image] AS [Image], 
+    [About].[Details] AS [Details], 
+    [About].[Title] AS [Title]
+    FROM [dbo].[About] AS [About]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="MainImages" EntityType="Self.MainImages" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [MainImages].[Id] AS [Id], 
+    [MainImages].[ImageUrl] AS [ImageUrl], 
+    [MainImages].[ImageThumbURL] AS [ImageThumbURL]
+    FROM [dbo].[MainImages] AS [MainImages]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_ActualRating_Courses" Association="Self.FK_ActualRating_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="ActualRating" EntitySet="ActualRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Courses_Categories" Association="Self.FK_Courses_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Courses" EntitySet="Courses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CoursesPriority_Courses" Association="Self.FK_CoursesPriority_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="CoursesPriority" EntitySet="CoursesPriority" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rates_Courses" Association="Self.FK_Rates_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="Rates" EntitySet="Rates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rates_Rates" Association="Self.FK_Rates_Rates">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Rates" EntitySet="Rates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserFriends_Users" Association="Self.FK_UserFriends_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserFriends" EntitySet="UserFriends" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersExpert_Categories" Association="Self.FK_UsersExpert_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="UsersExpert" EntitySet="UsersExpert" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersExpert_UsersExpert" Association="Self.FK_UsersExpert_UsersExpert">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UsersExpert" EntitySet="UsersExpert" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

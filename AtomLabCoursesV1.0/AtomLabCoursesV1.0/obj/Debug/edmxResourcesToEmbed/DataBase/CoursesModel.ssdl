@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CoursesDataBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'CoursesDataBase.dbo.Courses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="Image" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Teacher" Type="nvarchar" MaxLength="50" />
+    <Property Name="Long" Type="int" />
+    <Property Name="Details" Type="nvarchar(max)" />
+    <Property Name="Image" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'CoursesDataBase.dbo.MainImages' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="MainImages">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="ImageUrl" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ImageUrl" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ImageThumbURL" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityContainer Name="CoursesDataBaseModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Courses" EntityType="Self.Courses" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Courses].[ID] AS [ID], 
+    [Courses].[Name] AS [Name], 
+    [Courses].[Teacher] AS [Teacher], 
+    [Courses].[Long] AS [Long], 
+    [Courses].[Details] AS [Details], 
+    [Courses].[Image] AS [Image]
+    FROM [dbo].[Courses] AS [Courses]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="MainImages" EntityType="Self.MainImages" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [MainImages].[Id] AS [Id], 
+    [MainImages].[ImageUrl] AS [ImageUrl], 
+    [MainImages].[ImageThumbURL] AS [ImageThumbURL]
+    FROM [dbo].[MainImages] AS [MainImages]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

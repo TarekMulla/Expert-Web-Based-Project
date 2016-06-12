@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CoursesDataBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ActualRating">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CourseID" Type="Int32" Nullable="false" />
+    <Property Name="Rate" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cours" Relationship="Self.FK_ActualRating_Courses" FromRole="ActualRating" ToRole="Courses" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Courses" Relationship="Self.FK_Courses_Categories" FromRole="Categories" ToRole="Courses" />
+    <NavigationProperty Name="UsersExperts" Relationship="Self.FK_UsersExpert_Categories" FromRole="Categories" ToRole="UsersExpert" />
+  </EntityType>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Teacher" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Field" Type="Int32" />
+    <Property Name="CourseLevel" Type="Int32" />
+    <Property Name="HoursNumber" Type="Int32" />
+    <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Rate" Type="Int32" />
+    <Property Name="Priority" Type="Int32" />
+    <NavigationProperty Name="ActualRatings" Relationship="Self.FK_ActualRating_Courses" FromRole="Courses" ToRole="ActualRating" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_Courses_Categories" FromRole="Courses" ToRole="Categories" />
+    <NavigationProperty Name="CoursesPriorities" Relationship="Self.FK_CoursesPriority_Courses" FromRole="Courses" ToRole="CoursesPriority" />
+    <NavigationProperty Name="Rates" Relationship="Self.FK_Rates_Courses" FromRole="Courses" ToRole="Rates" />
+  </EntityType>
+  <EntityType Name="CoursesPriority">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CourseID" Type="Int32" Nullable="false" />
+    <Property Name="Priority" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cours" Relationship="Self.FK_CoursesPriority_Courses" FromRole="CoursesPriority" ToRole="Courses" />
+  </EntityType>
+  <EntityType Name="Rate">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="CourseID" Type="Int32" Nullable="false" />
+    <Property Name="UserRate" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cours" Relationship="Self.FK_Rates_Courses" FromRole="Rates" ToRole="Courses" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Rates_Rates" FromRole="Rates" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UserFriend">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FriendID" Type="Int32" Nullable="false" />
+    <Property Name="Priority" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserFriends_Users" FromRole="UserFriends" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Job" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FieldInterest" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Rates" Relationship="Self.FK_Rates_Rates" FromRole="Users" ToRole="Rates" />
+    <NavigationProperty Name="UserFriends" Relationship="Self.FK_UserFriends_Users" FromRole="Users" ToRole="UserFriends" />
+    <NavigationProperty Name="UsersExperts" Relationship="Self.FK_UsersExpert_UsersExpert" FromRole="Users" ToRole="UsersExpert" />
+  </EntityType>
+  <EntityType Name="UsersExpert">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="CategoryID" Type="Int32" Nullable="false" />
+    <Property Name="Expert" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_UsersExpert_Categories" FromRole="UsersExpert" ToRole="Categories" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UsersExpert_UsersExpert" FromRole="UsersExpert" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="About">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="MainImage">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="ImageUrl" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="ImageUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ImageThumbURL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_ActualRating_Courses">
+    <End Role="Courses" Type="CoursesDataBaseModel.Course" Multiplicity="1" />
+    <End Role="ActualRating" Type="Self.ActualRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ActualRating">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Courses_Categories">
+    <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Courses" Type="CoursesDataBaseModel.Course" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Courses">
+        <PropertyRef Name="Field" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersExpert_Categories">
+    <End Role="Categories" Type="Self.Category" Multiplicity="1" />
+    <End Role="UsersExpert" Type="Self.UsersExpert" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UsersExpert">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CoursesPriority_Courses">
+    <End Role="Courses" Type="CoursesDataBaseModel.Course" Multiplicity="1" />
+    <End Role="CoursesPriority" Type="Self.CoursesPriority" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CoursesPriority">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rates_Courses">
+    <End Role="Courses" Type="CoursesDataBaseModel.Course" Multiplicity="1" />
+    <End Role="Rates" Type="Self.Rate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Rates">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rates_Rates">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Rates" Type="Self.Rate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Rates">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserFriends_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="UserFriends" Type="Self.UserFriend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserFriends">
+        <PropertyRef Name="FriendID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersExpert_UsersExpert">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="UsersExpert" Type="Self.UsersExpert" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UsersExpert">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CoursesDataBaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ActualRatings" EntityType="Self.ActualRating" />
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Courses" EntityType="CoursesDataBaseModel.Course" />
+    <EntitySet Name="CoursesPriorities" EntityType="Self.CoursesPriority" />
+    <EntitySet Name="Rates" EntityType="Self.Rate" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="UserFriends" EntityType="Self.UserFriend" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UsersExperts" EntityType="Self.UsersExpert" />
+    <EntitySet Name="Abouts" EntityType="Self.About" />
+    <EntitySet Name="MainImages" EntityType="Self.MainImage" />
+    <AssociationSet Name="FK_ActualRating_Courses" Association="Self.FK_ActualRating_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="ActualRating" EntitySet="ActualRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Courses_Categories" Association="Self.FK_Courses_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Courses" EntitySet="Courses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersExpert_Categories" Association="Self.FK_UsersExpert_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="UsersExpert" EntitySet="UsersExperts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CoursesPriority_Courses" Association="Self.FK_CoursesPriority_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="CoursesPriority" EntitySet="CoursesPriorities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rates_Courses" Association="Self.FK_Rates_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="Rates" EntitySet="Rates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rates_Rates" Association="Self.FK_Rates_Rates">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Rates" EntitySet="Rates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserFriends_Users" Association="Self.FK_UserFriends_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserFriends" EntitySet="UserFriends" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersExpert_UsersExpert" Association="Self.FK_UsersExpert_UsersExpert">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UsersExpert" EntitySet="UsersExperts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
